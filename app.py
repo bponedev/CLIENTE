@@ -47,8 +47,11 @@ def export_csv():
     writer = csv.writer(output)
     for t in tables:
         writer.writerow([f"Tabela: {t}"])
-        for row in c.execute(f"SELECT * FROM {t}"):
-            writer.writerow(row)
+        try:
+            for row in c.execute(f"SELECT * FROM {t}"):
+                writer.writerow(row)
+        except Exception:
+            writer.writerow(['<tabela vazia ou inexistente>'])
         writer.writerow([])
     conn.close()
     mem = io.BytesIO(output.getvalue().encode('utf-8'))
@@ -68,7 +71,11 @@ def export_pdf():
     width, height = A4
     y = height - 80
     logo_path = os.path.join('logo', 'logo.png')
-    if os.path.exists(logo_path): p.drawImage(logo_path, 40, y-20, width=60, preserveAspectRatio=True)
+    if os.path.exists(logo_path):
+        try:
+            p.drawImage(logo_path, 40, y-20, width=60, preserveAspectRatio=True)
+        except Exception:
+            pass
     p.setFont("Helvetica-Bold", 14)
     p.drawString(120, y, "Sistema de Registro de Clientes")
     p.setFont("Helvetica", 10)
@@ -78,11 +85,16 @@ def export_pdf():
         p.setFont("Helvetica-Bold", 12)
         p.drawString(40, y, f"Tabela: {t}")
         y -= 16
-        for row in c.execute(f"SELECT nome, cpf, escritorio, tipo_acao, data_fechamento FROM {t}"):
-            if y < 80:
-                p.showPage(); y = height - 80
+        try:
+            for row in c.execute(f"SELECT nome, cpf, escritorio, tipo_acao, data_fechamento FROM {t}"):
+                if y < 80:
+                    p.showPage(); y = height - 80
+                p.setFont("Helvetica", 9)
+                p.drawString(50, y, " | ".join(str(r) for r in row))
+                y -= 12
+        except Exception:
             p.setFont("Helvetica", 9)
-            p.drawString(50, y, " | ".join(str(r) for r in row))
+            p.drawString(50, y, "(tabela vazia ou inexistente)")
             y -= 12
         y -= 16
     p.showPage(); p.save(); conn.close()
