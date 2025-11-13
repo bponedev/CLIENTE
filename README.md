@@ -1,11 +1,5 @@
-# 🧾 Sistema de Registro de Clientes
+# Sistema de Registro de Clientes (Atualizado)
 
-Sistema simples e eficiente para cadastro e gerenciamento de clientes entre escritórios associados.
-
-## Conteúdo incluído
-- index.html, table.html, style.css, script.js, app.py, requirements.txt, database.db, logo/ e README.md
-
-## Execução local
-pip install -r requirements.txt
-python app.py
-Acesse http://127.0.0.1:5000
+Inclui funcionalidades de exclusão (move para tabela 'excluidos') e restauração.
+Endpoints adicionais: /delete, /delete_selected, /restore, /restore_selected, /excluidos.html
+Coloque logo em /logo/logo.png para aparecer no PDF.
