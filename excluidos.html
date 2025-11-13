@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes Excluídos - Sistema de Registro de Clientes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Sistema de Registro de Clientes</h1>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <h2>Clientes Excluídos</h2>
+      <div class="toolbar">
+        <button id="restore-selected" class="btn-primary">Restaurar Selecionados</button>
+        <button onclick="window.location.href='table.html'" class="btn-secondary">Voltar para Registros</button>
+      </div>
+
+      <table id="excluidosTable">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="select-all"></th>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Escritório</th>
+            <th>Tipo de Ação</th>
+            <th>Data do Fechamento</th>
+            <th>Pendências</th>
+            <th>Nº do Processo</th>
+            <th>Data do Protocolo</th>
+            <th>Observações</th>
+            <th>Captador</th>
+            <th>Data de Exclusão</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="excluidos-body">
+          <!-- Preenchido dinamicamente -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Sistema de Registro de Clientes</p>
+  </footer>
+
+  <script>
+    async function carregarExcluidos() {
+      const response = await fetch('/export/csv?office=excluidos');
+      const texto = await response.text();
+      const linhas = texto.split('\n').filter(l => l && !l.startsWith('Tabela'));
+      const tbody = document.getElementById('excluidos-body');
+      tbody.innerHTML = '';
+
+      linhas.forEach((linha, index) => {
+        const colunas = linha.split(',');
+        if (colunas.length > 1) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><input type="checkbox" class="select-row" value="${colunas[0]}"></td>
+            <td>${colunas[0]}</td>
+            <td>${colunas[1]}</td>
+            <td>${colunas[2]}</td>
+            <td>${colunas[3]}</td>
+            <td>${colunas[4]}</td>
+            <td>${colunas[5]}</td>
+            <td>${colunas[6]}</td>
+            <td>${colunas[7]}</td>
+            <td>${colunas[8]}</td>
+            <td>${colunas[9]}</td>
+            <td>${colunas[10]}</td>
+            <td>${colunas[12] || ''}</td>
+            <td>
+              <form method="POST" action="/restore" onsubmit="return confirmarRestauracao()">
+                <input type="hidden" name="id" value="${colunas[0]}">
+                <button type="submit" class="btn-primary">Restaurar</button>
+              </form>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+    }
+
+    function confirmarRestauracao() {
+      return confirm('Deseja realmente restaurar este cliente?');
+    }
+
+    document.getElementById('select-all').addEventListener('change', function() {
+      document.querySelectorAll('.select-row').forEach(cb => cb.checked = this.checked);
+    });
+
+    document.getElementById('restore-selected').addEventListener('click', async () => {
+      const selecionados = Array.from(document.querySelectorAll('.select-row:checked')).map(cb => cb.value);
+      if (selecionados.length === 0) {
+        alert('Nenhum cliente selecionado.');
+        return;
+      }
+      if (!confirm('Deseja realmente restaurar os clientes selecionados?')) return;
+
+      const formData = new FormData();
+      selecionados.forEach(id => formData.append('ids', id));
+
+      await fetch('/restore_selected', { method: 'POST', body: formData });
+      alert('Clientes restaurados com sucesso!');
+      carregarExcluidos();
+    });
+
+    carregarExcluidos();
+  </script>
+</body>
+</html>
