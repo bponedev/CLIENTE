@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>console.log('Sistema de Registro de Clientes carregado'));

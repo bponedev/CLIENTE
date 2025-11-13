@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de Registro de Clientes</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<aside class="sidebar">
+<span class="brand">Sistema de Registro de Clientes</span>
+<a href="index.html">Novo cadastro</a>
+<a href="table.html">Ver registros</a>
+</aside>
+<main class="main">
+<div class="card">
+<h1>Novo Cadastro</h1>
+<form action="/submit" method="post">
+<label class="field">Nome<input name="nome" required></label>
+<label class="field">CPF<input name="cpf" required></label>
+<label class="field">Escritório<input name="escritorio" required></label>
+<label class="field">Tipo de ação<input name="tipo_acao"></label>
+<label class="field">Data do fechamento<input type="date" name="data_fechamento"></label>
+<label class="field">Pendências<input name="pendencias"></label>
+<label class="field">Número do processo<input name="numero_processo"></label>
+<label class="field">Data de protocolo<input type="date" name="data_protocolo"></label>
+<label class="field">Observações<textarea name="observacoes"></textarea></label>
+<label class="field">Captador<select name="captador"><option>Pago</option><option>Não pago</option></select></label>
+<button class="btn" type="submit">Salvar</button>
+</form>
+</div></main></div>
+<script src="script.js"></script>
+</body></html>
