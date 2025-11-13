@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Registros</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <a href="/">Novo cadastro</a>
+      <a href="/table">Ver registros</a>
+    </aside>
+    <main class="main">
+      <h1>Registros</h1>
+      {% if rows is not none %}
+        <h3>Escritório: {{ office }}</h3>
+        <a href="/export/csv?office={{ office }}">Exportar CSV desta tabela</a> | 
+        <a href="/export/pdf?office={{ office }}" target="_blank">Exportar PDF desta tabela</a>
+        <table>
+          <thead>
+            <tr>
+              {% for col in rows[0].keys() %}
+              <th>{{ col }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in rows %}
+            <tr>
+              {% for v in r.values() %}
+              <td>{{ v }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <h3>Tabelas disponíveis</h3>
+        <ul>
+          {% for t in tables %}
+            <li><a href="/table?office={{ t.replace('office_', '') }}">{{ t.replace('office_', '') }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </main>
+  </div>
+</body>
+</html>
