@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Escritórios atribuídos ao usuário</h2>
+
+<div class="card">
+
+<form method="POST">
+
+    {% for o in offices %}
+        <div>
+            <input type="checkbox"
+                   name="offices"
+                   value="{{ o.key }}"
+                   {% if o.key in user_offs %}checked{% endif %}>
+            {{ o.display }}
+        </div>
+    {% endfor %}
+
+    <button class="btn-primary">Salvar</button>
+
+</form>
+
+</div>
+
+{% endblock %}
