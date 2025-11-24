@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Editar Registro</h2>
+
+<div class="card">
+
+<form method="POST" action="{{ url_for('records.update') }}">
+
+    <input type="hidden" name="id" value="{{ cliente.id }}">
+
+    <label>Nome:</label>
+    <input type="text" name="nome" value="{{ cliente.nome }}">
+
+    <label>CPF:</label>
+    <input type="text" name="cpf" value="{{ cliente.cpf }}">
+
+    <label>Escritório:</label>
+    <select name="escritorio">
+        {% for o in offices %}
+            <option {% if cliente.escritorio_nome==o.display %}selected{% endif %}>{{ o.display }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Tipo da Ação:</label>
+    <input type="text" name="tipo_acao" value="{{ cliente.tipo_acao }}">
+
+    <label>Data de Fechamento:</label>
+    <input type="date" name="data_fechamento" value="{{ cliente.data_fechamento }}">
+
+    <label>Pendências:</label>
+    <textarea name="pendencias">{{ cliente.pendencias }}</textarea>
+
+    <label>Nº Processo:</label>
+    <input type="text" name="numero_processo" value="{{ cliente.numero_processo }}">
+
+    <label>Data de Protocolo:</label>
+    <input type="date" name="data_protocolo" value="{{ cliente.data_protocolo }}">
+
+    <label>Observações:</label>
+    <textarea name="observacoes">{{ cliente.observacoes }}</textarea>
+
+    <label>Captador:</label>
+    <select name="captador">
+        <option {% if cliente.captador=='NÃO PAGO' %}selected{% endif %}>NÃO PAGO</option>
+        <option {% if cliente.captador=='PAGO' %}selected{% endif %}>PAGO</option>
+    </select>
+
+    <button class="btn-primary">Salvar</button>
+</form>
+
+</div>
+
+{% endblock %}
