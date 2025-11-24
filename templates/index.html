@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Novo Registro</h2>
+
+<div class="card">
+    <form method="POST" action="{{ url_for('records.submit') }}">
+
+        <label>Nome:</label>
+        <input type="text" name="nome" required>
+
+        <label>CPF:</label>
+        <input type="text" name="cpf">
+
+        <label>Escritório:</label>
+        <select name="escritorio" required>
+            {% for o in offices %}
+                <option value="{{ o.display }}">{{ o.display }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Tipo da Ação:</label>
+        <input type="text" name="tipo_acao">
+
+        <label>Data de Fechamento:</label>
+        <input type="date" name="data_fechamento">
+
+        <label>Pendências:</label>
+        <textarea name="pendencias"></textarea>
+
+        <label>Nº Processo:</label>
+        <input type="text" name="numero_processo">
+
+        <label>Data de Protocolo:</label>
+        <input type="date" name="data_protocolo">
+
+        <label>Observações:</label>
+        <textarea name="observacoes"></textarea>
+
+        <label>Captador:</label>
+        <select name="captador">
+            <option>NÃO PAGO</option>
+            <option>PAGO</option>
+        </select>
+
+        <button class="btn-primary">Salvar</button>
+    </form>
+</div>
+
+{% endblock %}
