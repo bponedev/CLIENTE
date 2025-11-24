@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Usuários</h2>
+
+<a href="{{ url_for('admin.create_user') }}" class="btn-primary">Novo Usuário</a>
+
+<div class="card">
+<table class="main-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Nome</th>
+            <th>Função</th>
+            <th>Ativo</th>
+            <th>Escritórios</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for u in users %}
+        <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.full_name }}</td>
+            <td>{{ u.role }}</td>
+            <td>{{ "Sim" if u.active else "Não" }}</td>
+            <td>{{ u.offices|join(", ") }}</td>
+
+            <td>
+                <a class="btn-small" href="{{ url_for('admin.edit_user', user_id=u.id) }}">Editar</a>
+                <a class="btn-small" href="{{ url_for('admin.user_offices', user_id=u.id) }}">Escritórios</a>
+
+                <form method="POST" action="{{ url_for('admin.delete_user', user_id=u.id) }}" class="inline">
+                    <button class="btn-small btn-danger" onclick="return confirm('Excluir usuário?')">Excluir</button>
+                </form>
+            </td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+</div>
+
+{% endblock %}
