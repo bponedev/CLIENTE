@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Registros Excluídos</h2>
+
+<div class="card">
+
+<form method="POST" action="{{ url_for('records.restore_selected') }}">
+<table class="main-table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" onclick="toggleSelectAll(this)"></th>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Origem</th>
+            <th>Ação</th>
+            <th>Data Exclusão</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for r in rows %}
+        <tr>
+            <td><input type="checkbox" name="ids" value="{{ r[0] }}"></td>
+            <td>{{ r[0] }}</td>
+            <td>{{ r[1] }}</td>
+            <td>{{ r[2] }}</td>
+            <td>{{ r[3] }}</td>
+            <td>{{ r[5] }}</td>
+            <td>{{ r[13] }}</td>
+
+            <td>
+                <form method="POST" action="{{ url_for('records.restore') }}" class="inline">
+                    <input type="hidden" name="id" value="{{ r[0] }}">
+                    <button class="btn-small">Restaurar</button>
+                </form>
+
+                {% if current_user.role == "ADMIN" %}
+                <form method="POST" action="{{ url_for('records.delete_forever') }}" class="inline">
+                    <input type="hidden" name="id" value="{{ r[0] }}">
+                    <button class="btn-small btn-danger" onclick="return confirm('Excluir permanentemente?')">
+                        Excluir
+                    </button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+<button class="btn-primary">Restaurar Selecionados</button>
+</form>
+
+</div>
+
+{% endblock %}
