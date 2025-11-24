@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Registros do Escritório {{ office }}</h2>
+
+<div class="card">
+
+    <!-- FILTROS -->
+    <form method="GET" class="filter-bar">
+
+        <input type="hidden" name="office" value="{{ office }}">
+
+        <select name="filtro">
+            <option value="">Filtro</option>
+            <option value="nome" {% if filtro=='nome' %}selected{% endif %}>Nome</option>
+            <option value="cpf" {% if filtro=='cpf' %}selected{% endif %}>CPF</option>
+            <option value="id" {% if filtro=='id' %}selected{% endif %}>ID</option>
+        </select>
+
+        <input type="text" name="valor" placeholder="Valor" value="{{ valor }}">
+
+        <select name="data_tipo">
+            <option value="">Data</option>
+            <option value="data_fechamento" {% if data_tipo=='data_fechamento' %}selected{% endif %}>Fechamento</option>
+            <option value="data_protocolo" {% if data_tipo=='data_protocolo' %}selected{% endif %}>Protocolo</option>
+        </select>
+
+        <input type="date" name="data_de" value="{{ data_de }}">
+        <input type="date" name="data_ate" value="{{ data_ate }}">
+
+        <button class="btn-primary">Filtrar</button>
+    </form>
+
+</div>
+
+<!-- TABELA -->
+<div class="card">
+<form method="POST" action="{{ url_for('records.delete_selected') }}">
+    <input type="hidden" name="office" value="{{ office }}">
+
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th><input type="checkbox" onclick="toggleSelectAll(this)"></th>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Escritório</th>
+                <th>Ação</th>
+                <th>Fechamento</th>
+                <th>Protocolo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for r in rows %}
+            <tr>
+                <td><input type="checkbox" name="ids" value="{{ r[0] }}"></td>
+                <td>{{ r[0] }}</td>
+                <td>{{ r[1] }}</td>
+                <td>{{ r[2] }}</td>
+                <td>{{ r[4] }}</td>
+                <td>{{ r[5] }}</td>
+                <td>{{ r[6] }}</td>
+                <td>{{ r[9] }}</td>
+
+                <td>
+                    <a class="btn-small" href="{{ url_for('records.edit', id=r[0], office=office) }}">Editar</a>
+
+                    <form method="POST" action="{{ url_for('records.delete') }}" class="inline">
+                        <input type="hidden" name="id" value="{{ r[0] }}">
+                        <input type="hidden" name="office" value="{{ office }}">
+                        <button class="btn-small btn-danger" onclick="return confirm('Excluir?')">
+                            Excluir
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <button class="btn-danger">Excluir Selecionados</button>
+</form>
+</div>
+
+<!-- PAGINAÇÃO -->
+<div class="pagination">
+    {% for p in range(1, total_pages + 1) %}
+        {% if p == page %}
+            <span class="page active">{{ p }}</span>
+        {% else %}
+            <a class="page" href="{{ url_for('records.table', office=office, page=p, per_page=per_page) }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}
