@@ -1,0 +1,221 @@
+/* =======================================================
+   ESTILO GERAL
+========================================================== */
+
+body {
+    background: #1e1e1e;
+    color: #e5e5e5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+/* =======================================================
+   NAVBAR
+========================================================== */
+
+.navbar {
+    background: #111;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar a {
+    color: #e0e0e0;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.navbar a:hover {
+    color: #fff;
+}
+
+.user-info {
+    margin-right: 10px;
+    opacity: 0.8;
+}
+
+/* =======================================================
+   FLASH MESSAGES
+========================================================== */
+
+.flash-container {
+    margin: 10px auto;
+    width: 90%;
+    max-width: 1100px;
+}
+
+.flash {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.flash.success { background: #2e7d32; }
+.flash.error { background: #c62828; }
+.flash.info { background: #0277bd; }
+
+/* =======================================================
+   CARDS E FORMULÁRIOS
+========================================================== */
+
+.card {
+    background: #2b2b2b;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 10px #0003;
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 6px;
+    border: none;
+    border-radius: 4px;
+    background: #3b3b3b;
+    color: #fff;
+}
+
+textarea {
+    height: 80px;
+}
+
+/* =======================================================
+   BOTÕES
+========================================================== */
+
+button,
+.btn-primary,
+.btn-danger,
+.btn-secondary,
+.btn-small {
+    cursor: pointer;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #1565c0;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1e88e5;
+}
+
+.btn-secondary {
+    background: #777;
+    color: white;
+}
+
+.btn-danger {
+    background: #c62828;
+    color: white;
+}
+
+.btn-small {
+    background: #444;
+    color: white;
+    padding: 5px 10px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+/* =======================================================
+   TABELAS
+========================================================== */
+
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.main-table th,
+.main-table td {
+    border-bottom: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+}
+
+.main-table th {
+    background: #333;
+}
+
+.main-table tr:hover {
+    background: #383838;
+}
+
+/* =======================================================
+   LOGIN
+========================================================== */
+
+.login-container {
+    background: #2b2b2b;
+    padding: 30px;
+    border-radius: 8px;
+    width: 360px;
+    margin: 80px auto;
+    box-shadow: 0 0 15px #0004;
+}
+
+.password-wrapper {
+    display: flex;
+}
+
+.password-wrapper input {
+    flex: 1;
+}
+
+.show-password {
+    width: 40px;
+    background: #444;
+    color: #fff;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+/* =======================================================
+   PAGINAÇÃO
+========================================================== */
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.page {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    background: #333;
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+}
+
+.page.active {
+    background: #1565c0;
+}
