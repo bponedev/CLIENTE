@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Editar Usuário</h2>
+
+<div class="card">
+
+<form method="POST">
+
+    <label>Nome completo:</label>
+    <input type="text" name="full_name" value="{{ user.full_name }}">
+
+    <label>Função:</label>
+    <select name="role">
+        <option {% if user.role=='OPERADOR' %}selected{% endif %}>OPERADOR</option>
+        <option {% if user.role=='SUPERVISOR' %}selected{% endif %}>SUPERVISOR</option>
+        <option {% if user.role=='ADMIN' %}selected{% endif %}>ADMIN</option>
+    </select>
+
+    <label>Ativo?</label>
+    <input type="checkbox" name="active" {% if user.active %}checked{% endif %}>
+
+    <button class="btn-primary">Salvar</button>
+
+</form>
+
+</div>
+
+{% endblock %}
