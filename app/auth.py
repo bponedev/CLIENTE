@@ -1,0 +1,3 @@
+"""
+Arquivo placeholder para compatibilidade.
+"""
