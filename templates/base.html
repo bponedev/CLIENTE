@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="container">
+        <strong>SISTEMA</strong> —
+
+        {% if session.get("user") %}
+            <a href="{{ url_for('registros.index') }}">Novo Cadastro</a>
+            <a href="{{ url_for('registros.table') }}">Registros</a>
+            <a href="{{ url_for('registros.excluidos') }}">Excluídos</a>
+            <a href="{{ url_for('offices.list_offices') }}">Escritórios</a>
+            <a href="{{ url_for('users.admin_users') }}">Usuários</a>
+            <a href="{{ url_for('auth.logout') }}">Sair</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Login</a>
+        {% endif %}
+    </div>
+</header>
+
+<div class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in messages %}
+        <div class="flash flash-{{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
