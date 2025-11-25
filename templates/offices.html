@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Escritórios</h2>
+
+<div class="card dark-card">
+
+<form method="POST" action="{{ url_for('offices.create') }}">
+    <input type="text" name="office_name" placeholder="Novo escritório">
+    <button class="btn-primary">Adicionar</button>
+</form>
+
+</div>
+
+<div class="card dark-card">
+
+<table>
+<thead>
+<tr>
+    <th>Chave</th>
+    <th>Nome</th>
+    <th>Ações</th>
+</tr>
+</thead>
+
+<tbody>
+{% for o in offices %}
+<tr>
+    <td>{{ o.office_key }}</td>
+    <td>{{ o.display_name }}</td>
+    <td>
+        <a href="{{ url_for('offices.office_edit', office_key=o.office_key) }}" class="btn-small">Editar</a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+
+{% endblock %}
