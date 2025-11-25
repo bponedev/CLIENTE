@@ -5,6 +5,11 @@ Funções gerais de acesso ao banco.
 import sqlite3
 from flask import g, current_app
 
+
+# ============================================================
+# Conexão com o banco
+# ============================================================
+
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(
@@ -17,14 +22,15 @@ def get_db():
 
 def close_db(e=None):
     db = g.pop("db", None)
-
     if db is not None:
         db.close()
 
 
-def init_database(app):
-    
-    def query(sql, params=(), one=False):
+# ============================================================
+# Funções utilitárias (usadas pelas rotas)
+# ============================================================
+
+def query(sql, params=(), one=False):
     db = get_db()
     cur = db.execute(sql, params)
     rv = cur.fetchall()
@@ -39,12 +45,17 @@ def execute(sql, params=()):
     cur.close()
     return True
 
-    """Cria o banco de dados e tabelas se não existirem."""
+
+# ============================================================
+# Inicializar banco e tabelas
+# ============================================================
+
+def init_database(app):
+    """Cria o banco de dados e suas tabelas se não existirem."""
     with app.app_context():
         db = get_db()
         cursor = db.cursor()
 
-        # Exemplo de criação de tabela, adicione as suas aqui
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
