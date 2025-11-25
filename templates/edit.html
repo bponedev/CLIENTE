@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Editar Registro</h2>
+
+<div class="card dark-card">
+
+<form method="POST">
+
+    <label>Nome:</label>
+    <input type="text" name="nome" value="{{ reg.nome }}">
+
+    <label>CPF:</label>
+    <input type="text" name="cpf" value="{{ reg.cpf }}">
+
+    <label>Tipo de ação:</label>
+    <input type="text" name="tipo_acao" value="{{ reg.tipo_acao }}">
+
+    <label>Data fechamento:</label>
+    <input type="date" name="data_fechamento" value="{{ reg.data_fechamento }}">
+
+    <label>Tags:</label>
+    <input type="text" name="tags" value="{{ reg.tags }}">
+
+    <button class="btn-primary">Salvar</button>
+
+</form>
+
+</div>
+
+{% endblock %}
