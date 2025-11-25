@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Registros</h2>
+
+<div class="card dark-card">
+
+<table>
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>CPF</th>
+    <th>Tipo</th>
+    <th>Fechamento</th>
+    <th>Ações</th>
+</tr>
+</thead>
+
+<tbody>
+{% for r in rows %}
+<tr>
+    <td>{{ r.id }}</td>
+    <td>{{ r.nome }}</td>
+    <td>{{ r.cpf }}</td>
+    <td>{{ r.tipo_acao }}</td>
+    <td>{{ r.data_fechamento }}</td>
+    <td>
+        <a href="{{ url_for('registros.edit', id=r.id) }}" class="btn-small">Editar</a>
+
+        <form method="POST"
+              action="{{ url_for('registros.delete') }}"
+              style="display:inline-block;">
+            <input type="hidden" name="id" value="{{ r.id }}">
+            <button class="btn-small btn-danger">Excluir</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+
+{% endblock %}
