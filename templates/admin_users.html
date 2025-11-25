@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Usuários</h2>
+
+<div class="card dark-card">
+
+<a href="{{ url_for('users.admin_users_create') }}" class="btn-primary">Novo Usuário</a>
+
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Usuário</th>
+  <th>Nome</th>
+  <th>Cargo</th>
+  <th>Status</th>
+  <th>Ações</th>
+</tr>
+</thead>
+
+<tbody>
+{% for u in users %}
+<tr>
+  <td>{{ u.id }}</td>
+  <td>{{ u.username }}</td>
+  <td>{{ u.full_name }}</td>
+  <td>{{ u.role }}</td>
+  <td>{{ "Ativo" if u.active else "Inativo" }}</td>
+  <td>
+    <a href="{{ url_for('users.admin_users_edit', id=u.id) }}" class="btn-small">Editar</a>
+  </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+</div>
+
+{% endblock %}
