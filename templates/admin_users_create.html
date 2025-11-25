@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Novo Usuário</h2>
+
+<div class="card dark-card">
+
+<form method="POST">
+
+    <label>Login:</label>
+    <input type="text" name="username">
+
+    <label>Nome Completo:</label>
+    <input type="text" name="full_name">
+
+    <label>Senha Inicial:</label>
+    <input type="password" name="password">
+
+    <label>Função:</label>
+    <select name="role">
+        <option>ADMIN</option>
+        <option>SUPERVISOR</option>
+        <option>OPERADOR</option>
+        <option>VISUALIZADOR</option>
+    </select>
+
+    <button class="btn-primary">Criar</button>
+
+</form>
+
+</div>
+
+{% endblock %}
