@@ -23,6 +23,22 @@ def close_db(e=None):
 
 
 def init_database(app):
+    
+    def query(sql, params=(), one=False):
+    db = get_db()
+    cur = db.execute(sql, params)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
+
+
+def execute(sql, params=()):
+    db = get_db()
+    cur = db.execute(sql, params)
+    db.commit()
+    cur.close()
+    return True
+
     """Cria o banco de dados e tabelas se não existirem."""
     with app.app_context():
         db = get_db()
