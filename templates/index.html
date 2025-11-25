@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Novo Registro</h2>
+
+<div class="card dark-card">
+
+<form method="POST" action="{{ url_for('registros.submit') }}">
+
+    <label>Nome:</label>
+    <input type="text" name="nome">
+
+    <label>CPF:</label>
+    <input type="text" name="cpf">
+
+    <label>Tipo de ação:</label>
+    <input type="text" name="tipo_acao">
+
+    <label>Data fechamento:</label>
+    <input type="date" name="data_fechamento">
+
+    <label>Tags:</label>
+    <input type="text" name="tags">
+    <div id="tag-preview"></div>
+
+    <button class="btn-primary">Salvar</button>
+
+</form>
+
+</div>
+
+{% endblock %}
