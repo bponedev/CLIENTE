@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Editar Escritório</h2>
+
+<div class="card dark-card">
+
+<form method="POST">
+
+    <label>Chave:</label>
+    <input type="text" value="{{ office.office_key }}" disabled>
+
+    <label>Nome de Exibição:</label>
+    <input type="text" name="display_name" value="{{ office.display_name }}">
+
+    <button class="btn-primary">Salvar</button>
+
+</form>
+
+</div>
+
+{% endblock %}
