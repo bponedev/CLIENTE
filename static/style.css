@@ -1,0 +1,70 @@
+/* ESTILO DARK SIMPLES */
+
+body {
+    background: #1c1c1c;
+    color: #eee;
+    font-family: Arial;
+}
+
+a { color: #4da3ff; }
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.topbar {
+    background: #111;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
+    padding: 20px;
+    background: #262626;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+button, .btn-primary {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 6px;
+}
+
+.btn-danger { background: #d9534f; }
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.tag-chip {
+    background: #4da3ff;
+    color: black;
+    padding: 3px 8px;
+    border-radius: 15px;
+    margin-right: 5px;
+}
