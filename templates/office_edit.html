@@ -3,22 +3,12 @@
 
 <h2>Editar Escritório</h2>
 
-<div class="card">
+<form method="POST" action="{{ url_for('offices_edit', office_id=office.id) }}" class="card">
 
-<form method="POST">
-
-    <label>Chave (fixa):</label>
-    <input type="text" value="{{ office.key }}" disabled>
-
-    <label>Nome de Exibição:</label>
-    <input type="text" name="display_name" value="{{ office.display }}" required>
+    <label>Nome:</label>
+    <input type="text" name="nome" value="{{ office.nome }}" required>
 
     <button class="btn-primary">Salvar</button>
-
-    <a href="{{ url_for('offices.list_offices') }}" class="btn-secondary">Cancelar</a>
-
 </form>
-
-</div>
 
 {% endblock %}
