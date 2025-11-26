@@ -4,7 +4,7 @@
 <h2>Novo Registro</h2>
 
 <div class="card">
-    <form method="POST" action="{{ url_for('records.submit') }}">
+    <form method="POST" action="{{ url_for('records_submit') }}">
 
         <label>Nome:</label>
         <input type="text" name="nome" required>
@@ -15,7 +15,7 @@
         <label>Escritório:</label>
         <select name="escritorio" required>
             {% for o in offices %}
-                <option value="{{ o.display }}">{{ o.display }}</option>
+                <option value="{{ o.nome }}">{{ o.nome }}</option>
             {% endfor %}
         </select>
 
