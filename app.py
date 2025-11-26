@@ -8,7 +8,6 @@ SISTEMA MONOLÍTICO COMPLETO
 - PDF (export)
 - Banco de dados SQLite interno
 - Rotas centralizadas
-- Templates embutidos (render_template continua funcionando)
 """
 
 from flask import (
@@ -90,6 +89,17 @@ def init_db():
         )
     """)
 
+    # ===========================================================
+    # ADMIN PADRÃO AUTOMÁTICO
+    # ===========================================================
+    admin = query("SELECT * FROM users WHERE email='admin@admin.com'", one=True)
+    if not admin:
+        execute("""
+            INSERT INTO users (nome, email, senha, role)
+            VALUES ('Administrador', 'admin@admin.com', '123', 'ADMIN')
+        """)
+        print(">>> ADMIN criado automaticamente: admin@admin.com / 123")
+
 
 # ===========================================================
 # DECORATOR DE LOGIN
@@ -139,7 +149,7 @@ def logout():
 
 
 # ===========================================================
-# PÁGINA INICIAL (INDEX)
+# HOME
 # ===========================================================
 
 @app.route("/")
@@ -190,12 +200,12 @@ def registros():
 
 
 # ===========================================================
-# USUÁRIOS
+# USUÁRIOS (ADMIN)
 # ===========================================================
 
 @app.route("/admin/users")
 @login_required
-def admin_users():
+def users_list():
     if session["role"] != "ADMIN":
         return "Acesso negado."
 
@@ -205,7 +215,7 @@ def admin_users():
 
 @app.route("/admin/users/create", methods=["GET", "POST"])
 @login_required
-def admin_users_create():
+def users_create():
     if session["role"] != "ADMIN":
         return "Acesso negado."
 
@@ -221,14 +231,14 @@ def admin_users_create():
             VALUES (?, ?, ?, ?)
         """, data)
 
-        return redirect(url_for("admin_users"))
+        return redirect(url_for("users_list"))
 
     return render_template("admin_users_create.html")
 
 
 @app.route("/admin/users/edit/<int:user_id>", methods=["GET", "POST"])
 @login_required
-def admin_users_edit(user_id):
+def users_edit(user_id):
     if session["role"] != "ADMIN":
         return "Acesso negado."
 
@@ -248,7 +258,7 @@ def admin_users_edit(user_id):
             WHERE id=?
         """, data)
 
-        return redirect(url_for("admin_users"))
+        return redirect(url_for("users_list"))
 
     return render_template("admin_users_edit.html", user=user)
 
@@ -259,7 +269,7 @@ def admin_users_edit(user_id):
 
 @app.route("/offices")
 @login_required
-def offices():
+def offices_list():
     o = query("SELECT * FROM offices ORDER BY nome ASC")
     return render_template("offices.html", offices=o)
 
@@ -269,7 +279,7 @@ def offices():
 def offices_create():
     name = request.form["office_name"]
     execute("INSERT INTO offices (nome) VALUES (?)", (name,))
-    return redirect(url_for("offices"))
+    return redirect(url_for("offices_list"))
 
 
 @app.route("/offices/edit/<int:office_id>", methods=["GET", "POST"])
@@ -279,7 +289,7 @@ def offices_edit(office_id):
 
     if request.method == "POST":
         execute("UPDATE offices SET nome=? WHERE id=?", (request.form["nome"], office_id))
-        return redirect(url_for("offices"))
+        return redirect(url_for("offices_list"))
 
     return render_template("office_edit.html", office=office)
 
