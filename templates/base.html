@@ -2,47 +2,26 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title or "Sistema Jurídico" }}</title>
+    <title>{{ title if title else "Sistema" }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
-
 <body>
 
-    <!-- NAVBAR SUPERIOR -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="{{ url_for('main.index') }}">Início</a>
-            <a href="{{ url_for('records.table') }}">Tabela</a>
-
-            {% if current_user and current_user.role in ["ADMIN", "SUPERVISOR"] %}
-            <a href="{{ url_for('offices.list_offices') }}">Escritórios</a>
-            <a href="{{ url_for('admin.users') }}">Usuários</a>
-            <a href="{{ url_for('records.excluidos') }}">Excluídos</a>
-            {% endif %}
-        </div>
-
-        {% if current_user %}
-        <div class="nav-right">
-            <span class="user-info">{{ current_user.full_name }} ({{ current_user.role }})</span>
-            <a href="{{ url_for('auth.logout') }}" class="logout-btn">Sair</a>
-        </div>
-        {% endif %}
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}">Início</a>
+        <a href="{{ url_for('records_list') }}">Registros</a>
+        <a href="{{ url_for('users_list') }}">Usuários</a>
+        <a href="{{ url_for('offices_list') }}">Escritórios</a>
+        <a href="{{ url_for('login') }}">Login</a>
     </nav>
+</header>
 
-    <!-- FLASH MESSAGES -->
-    <div class="flash-container">
-        {% with messages = get_flashed_messages(with_categories=True) %}
-            {% for category, msg in messages %}
-                <div class="flash {{ category }}">{{ msg }}</div>
-            {% endfor %}
-        {% endwith %}
-    </div>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
 
 </body>
 </html>
