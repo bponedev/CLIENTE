@@ -5,49 +5,49 @@
 
 <div class="card">
 
-<form method="POST" action="{{ url_for('records.update') }}">
+    <form method="POST" action="{{ url_for('records_update', registro_id=registro.id) }}">
 
-    <input type="hidden" name="id" value="{{ cliente.id }}">
+        <label>Nome:</label>
+        <input type="text" name="nome" value="{{ registro.nome }}">
 
-    <label>Nome:</label>
-    <input type="text" name="nome" value="{{ cliente.nome }}">
+        <label>CPF:</label>
+        <input type="text" name="cpf" value="{{ registro.cpf }}">
 
-    <label>CPF:</label>
-    <input type="text" name="cpf" value="{{ cliente.cpf }}">
+        <label>Escritório:</label>
+        <select name="escritorio">
+            {% for o in offices %}
+                <option value="{{ o.nome }}" {% if o.nome == registro.escritorio %}selected{% endif %}>
+                    {{ o.nome }}
+                </option>
+            {% endfor %}
+        </select>
 
-    <label>Escritório:</label>
-    <select name="escritorio">
-        {% for o in offices %}
-            <option {% if cliente.escritorio_nome==o.display %}selected{% endif %}>{{ o.display }}</option>
-        {% endfor %}
-    </select>
+        <label>Tipo da Ação:</label>
+        <input type="text" name="tipo_acao" value="{{ registro.tipo_acao }}">
 
-    <label>Tipo da Ação:</label>
-    <input type="text" name="tipo_acao" value="{{ cliente.tipo_acao }}">
+        <label>Data Fechamento:</label>
+        <input type="date" name="data_fechamento" value="{{ registro.data_fechamento }}">
 
-    <label>Data de Fechamento:</label>
-    <input type="date" name="data_fechamento" value="{{ cliente.data_fechamento }}">
+        <label>Pendências:</label>
+        <textarea name="pendencias">{{ registro.pendencias }}</textarea>
 
-    <label>Pendências:</label>
-    <textarea name="pendencias">{{ cliente.pendencias }}</textarea>
+        <label>Nº Processo:</label>
+        <input type="text" name="numero_processo" value="{{ registro.numero_processo }}">
 
-    <label>Nº Processo:</label>
-    <input type="text" name="numero_processo" value="{{ cliente.numero_processo }}">
+        <label>Data Protocolo:</label>
+        <input type="date" name="data_protocolo" value="{{ registro.data_protocolo }}">
 
-    <label>Data de Protocolo:</label>
-    <input type="date" name="data_protocolo" value="{{ cliente.data_protocolo }}">
+        <label>Observações:</label>
+        <textarea name="observacoes">{{ registro.observacoes }}</textarea>
 
-    <label>Observações:</label>
-    <textarea name="observacoes">{{ cliente.observacoes }}</textarea>
+        <label>Captador:</label>
+        <select name="captador">
+            <option {% if registro.captador == 'NÃO PAGO' %}selected{% endif %}>NÃO PAGO</option>
+            <option {% if registro.captador == 'PAGO' %}selected{% endif %}>PAGO</option>
+        </select>
 
-    <label>Captador:</label>
-    <select name="captador">
-        <option {% if cliente.captador=='NÃO PAGO' %}selected{% endif %}>NÃO PAGO</option>
-        <option {% if cliente.captador=='PAGO' %}selected{% endif %}>PAGO</option>
-    </select>
-
-    <button class="btn-primary">Salvar</button>
-</form>
+        <button class="btn-primary">Salvar</button>
+    </form>
 
 </div>
 
