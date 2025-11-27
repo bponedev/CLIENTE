@@ -3,7 +3,16 @@
 
 <h2>Escritórios</h2>
 
-<a href="{{ url_for('offices_create') }}" class="btn-primary">Criar Escritório</a>
+<h3>Criar novo escritório</h3>
+
+<form action="{{ url_for('offices_add') }}" method="POST">
+    <input type="text" name="name" placeholder="Nome do escritório" required>
+    <button type="submit">Adicionar</button>
+</form>
+
+<hr>
+
+<h3>Lista de Escritórios</h3>
 
 <ul>
     {% for o in offices %}
