@@ -1,13 +1,7 @@
 """
 SISTEMA MONOLÍTICO COMPLETO
-- Login / Logout
-- Usuários
-- Escritórios
-- Registros
-- Exclusões
-- PDF (export)
-- Banco de dados SQLite interno
-- Rotas centralizadas
+Login via USUÁRIO + SENHA
+Admin criado automaticamente: usuario=admin / senha=123
 """
 
 from flask import (
@@ -18,6 +12,7 @@ import sqlite3
 from functools import wraps
 from reportlab.pdfgen import canvas
 import io
+
 
 # ===========================================================
 # CONFIGURAÇÕES PRINCIPAIS
@@ -59,8 +54,7 @@ def init_db():
     execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL,
-            email TEXT UNIQUE NOT NULL,
+            usuario TEXT UNIQUE NOT NULL,
             senha TEXT NOT NULL,
             role TEXT DEFAULT 'USER'
         )
@@ -92,13 +86,13 @@ def init_db():
     # ===========================================================
     # ADMIN PADRÃO AUTOMÁTICO
     # ===========================================================
-    admin = query("SELECT * FROM users WHERE email='admin@admin.com'", one=True)
+    admin = query("SELECT * FROM users WHERE usuario='admin'", one=True)
     if not admin:
         execute("""
-            INSERT INTO users (nome, email, senha, role)
-            VALUES ('Administrador', 'admin@admin.com', '123', 'ADMIN')
+            INSERT INTO users (usuario, senha, role)
+            VALUES ('admin', '123', 'ADMIN')
         """)
-        print(">>> ADMIN criado automaticamente: admin@admin.com / 123")
+        print(">>> ADMIN criado: usuario=admin / senha=123")
 
 
 # ===========================================================
@@ -115,19 +109,19 @@ def login_required(f):
 
 
 # ===========================================================
-# ROTAS DE AUTENTICAÇÃO
+# LOGIN / LOGOUT
 # ===========================================================
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
 
-        email = request.form["email"]
+        usuario = request.form["usuario"]
         senha = request.form["senha"]
 
         user = query(
-            "SELECT * FROM users WHERE email=? AND senha=?",
-            (email, senha),
+            "SELECT * FROM users WHERE usuario=? AND senha=?",
+            (usuario, senha),
             one=True
         )
 
@@ -137,7 +131,7 @@ def login():
             flash("Login realizado!", "success")
             return redirect(url_for("home"))
 
-        flash("Credenciais inválidas", "danger")
+        flash("Usuário ou senha inválidos", "danger")
 
     return render_template("login.html")
 
@@ -221,14 +215,13 @@ def users_create():
 
     if request.method == "POST":
         data = (
-            request.form["nome"],
-            request.form["email"],
+            request.form["usuario"],
             request.form["senha"],
             request.form["role"]
         )
         execute("""
-            INSERT INTO users (nome, email, senha, role)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO users (usuario, senha, role)
+            VALUES (?, ?, ?)
         """, data)
 
         return redirect(url_for("users_list"))
@@ -246,15 +239,14 @@ def users_edit(user_id):
 
     if request.method == "POST":
         data = (
-            request.form["nome"],
-            request.form["email"],
+            request.form["usuario"],
             request.form["senha"],
             request.form["role"],
             user_id
         )
 
         execute("""
-            UPDATE users SET nome=?, email=?, senha=?, role=?
+            UPDATE users SET usuario=?, senha=?, role=?
             WHERE id=?
         """, data)
 
@@ -295,7 +287,7 @@ def offices_edit(office_id):
 
 
 # ===========================================================
-# EXPORTAÇÃO EM PDF
+# EXPORTAÇÃO PDF
 # ===========================================================
 
 @app.route("/export/pdf")
@@ -326,16 +318,12 @@ def export_pdf():
 
 
 # ===========================================================
-# INICIALIZAÇÃO DO BANCO AO INICIAR
+# INICIALIZAÇÃO
 # ===========================================================
 
 with app.app_context():
     init_db()
 
-
-# ===========================================================
-# EXECUÇÃO LOCAL
-# ===========================================================
 
 if __name__ == "__main__":
     app.run(debug=True)
