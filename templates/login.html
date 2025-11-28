@@ -1,21 +1,47 @@
 {% extends "base.html" %}
+
 {% block content %}
 
-<div class="login-container">
-    <h2>Acesso ao Sistema</h2>
+<h2>Login</h2>
 
-    <form method="POST">
+<div class="card">
+
+    <form method="POST" action="{{ url_for('login') }}">
+
         <label>Usuário:</label>
-        <input type="text" name="username" required>
+        <input type="text" name="usuario" required placeholder="Digite seu usuário">
 
         <label>Senha:</label>
-        <div class="password-wrapper">
-            <input type="password" name="password" id="password-field" required>
-            <button type="button" class="show-password" onclick="togglePassword()">👁</button>
+
+        <div style="position: relative;">
+            <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
+
+            <button type="button"
+                    onclick="toggleSenha()"
+                    style="
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        border: none;
+                        background: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                    ">👁</button>
         </div>
 
-        <button class="btn-primary">Entrar</button>
+        <br>
+
+        <button class="btn-primary" style="width:100%;">Entrar</button>
     </form>
+
 </div>
+
+<script>
+function toggleSenha() {
+    const campo = document.getElementById("senha");
+    campo.type = campo.type === "password" ? "text" : "password";
+}
+</script>
 
 {% endblock %}

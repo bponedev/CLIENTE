@@ -1,39 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Novo Usuário</h2>
+<h2>Criar Usuário</h2>
 
-<div class="card">
+<form method="POST" action="{{ url_for('users_create') }}" class="card">
 
-<form method="POST">
+    <label>Nome:</label>
+    <input type="text" name="nome" required>
 
-    <label>Usuário (login):</label>
-    <input type="text" name="username" required>
-
-    <label>Nome completo:</label>
-    <input type="text" name="full_name">
+    <label>Email:</label>
+    <input type="email" name="email" required>
 
     <label>Senha:</label>
-    <input type="password" name="password" required>
+    <input type="password" name="senha" required>
 
-    <label>Função:</label>
-    <select name="role">
-        <option value="OPERADOR">OPERADOR</option>
-        <option value="SUPERVISOR">SUPERVISOR</option>
-        <option value="ADMIN">ADMIN</option>
-    </select>
-
-    <label>Escritórios permitidos:</label>
-    {% for o in offices %}
-        <div>
-            <input type="checkbox" name="offices" value="{{ o.key }}"> {{ o.display }}
-        </div>
-    {% endfor %}
-
-    <button class="btn-primary">Criar Usuário</button>
-
+    <button class="btn-primary">Criar</button>
 </form>
-
-</div>
 
 {% endblock %}

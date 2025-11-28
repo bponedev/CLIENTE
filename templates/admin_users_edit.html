@@ -3,27 +3,18 @@
 
 <h2>Editar Usuário</h2>
 
-<div class="card">
+<form method="POST" action="{{ url_for('users_edit', user_id=user.id) }}" class="card">
 
-<form method="POST">
+    <label>Nome:</label>
+    <input type="text" name="nome" value="{{ user.nome }}" required>
 
-    <label>Nome completo:</label>
-    <input type="text" name="full_name" value="{{ user.full_name }}">
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ user.email }}" required>
 
-    <label>Função:</label>
-    <select name="role">
-        <option {% if user.role=='OPERADOR' %}selected{% endif %}>OPERADOR</option>
-        <option {% if user.role=='SUPERVISOR' %}selected{% endif %}>SUPERVISOR</option>
-        <option {% if user.role=='ADMIN' %}selected{% endif %}>ADMIN</option>
-    </select>
-
-    <label>Ativo?</label>
-    <input type="checkbox" name="active" {% if user.active %}checked{% endif %}>
+    <label>Senha Nova (opcional):</label>
+    <input type="password" name="senha">
 
     <button class="btn-primary">Salvar</button>
-
 </form>
-
-</div>
 
 {% endblock %}
